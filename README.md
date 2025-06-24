@@ -17,11 +17,18 @@ The entire workflow is organized as Python scripts and is fully reproducible.
 ```
 UFC_Predictor/
 │
-├── data/                        # Raw data (CSV)
+├── data/                        # Raw data (CSV) and generated files
 │
-├── src/                         # Python source code (preprocessing, training, analysis)
+├── models/                      # Trained model files (created automatically)
 │
-├── main.py                      # Central workflow script (step-by-step)
+├── src/                         # Python source code (preprocessing, training, analysis, prediction)
+│   ├── data_exploration.py      # Data exploration and cleaning
+│   ├── data_preprocessing.py    # Data preprocessing (scaling, encoding)
+│   ├── model_training.py        # Model training and feature analysis
+│   ├── analysis.py              # (Optional) Feature importance analysis/plotting
+│   └── predict_fight.py         # Script for interactive fight prediction
+│
+├── main.py                      # Central workflow script (step-by-step, fully documented)
 ├── environment.yml              # Anaconda environment for reproducibility
 └── README.md                    # This file
 ```
@@ -52,16 +59,41 @@ UFC_Predictor/
 
 ## Workflow (main.py)
 
+The workflow is fully linear and documented in `main.py`:
+
 - **Data Exploration & Cleaning:**  
-  Removes empty/unnecessary columns, handles missing values, checks the target variable.
+  Loads the raw data, checks for missing values, explores the structure, and removes unnecessary columns.  
+  Saves a cleaned version for further processing.
+
 - **Preprocessing:**  
-  Scales numeric features, encodes the target variable.
-- **Model Training:**  
-  Trains a separate model for each weight class and gender.
-- **Analysis:**  
-  Displays the most important factors (feature importances) for fight outcomes.
+  Scales numeric features, encodes the target variable, and extracts additional features such as weight class and gender.  
+  Saves the preprocessed data for modeling.
+
+- **Model Training & Analysis:**  
+  Trains a separate Random Forest model for each weight class and gender.  
+  Evaluates model performance, analyzes feature importance, and saves the trained models for later use.  
+  Visualizes the top 10 most important features for each model.
+
 - **Interpretation:**  
-  Short conclusions and findings are printed in the script output.
+  Short conclusions and findings are printed in the script output after each step.
+
+---
+
+## Predicting a Fight
+
+After running `main.py` and training the models, you can predict the outcome of a specific fight using the interactive script:
+
+```bash
+python src/predict_fight.py
+```
+
+You will be prompted to enter:
+- Fighter 1 name
+- Fighter 2 name
+- Weight class (e.g. "Flyweight")
+- Gender ("Men" or "Women")
+
+The script will output the predicted winner and the 10 most important features for the selected model.
 
 ---
 
@@ -69,7 +101,12 @@ UFC_Predictor/
 
 - **Python scripts only:**  
   The entire project runs as `.py` files, no notebooks.
-- **All steps are documented** and commented so the workflow is easy to follow.
-- **Own analyses and findings** are included directly in the code and console output.
+- **All steps are documented** and commented so the workflow is easy to follow and reproducible.
+- **All analyses and findings** are included directly in the code and console output.
+- **Models are saved automatically** in the `models/` folder after training.
 
 ---
+
+## Contact
+
+For questions or feedback, please contact the Github! (JoelK27/UFC_Predictor)

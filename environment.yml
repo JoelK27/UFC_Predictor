@@ -8,3 +8,5 @@ dependencies:
   - scikit-learn
   - matplotlib
   - numpy
+  - seaborn
+  - pickle

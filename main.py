@@ -1,27 +1,35 @@
 """
 UFC Fight Outcome Prediction - Workflow
 --------------------------------------
-Dieses Skript führt alle Schritte von Datenbeschaffung, Preprocessing, Modelltraining bis zur Analyse aus.
+This script runs all steps: data exploration, preprocessing, model training, and analysis.
+Each step is clearly documented and explained, so the workflow can be followed like a report.
 """
 
 import os
-from src.data_preprocessing import load_and_preprocess_data
-from src.model_training import train_models
-from src.analysis import analyze_feature_importance, plot_feature_importance
+from src.data_exploration import explore_data
+from src.data_preprocessing import preprocess_data
+from src.model_training import train_and_analyze
 
-# 1. Daten laden und vorverarbeiten
-data_path = os.path.join("data", "UFC_Fight_Statistics.csv")
-df = load_and_preprocess_data(data_path)
+# Step 1: Data Exploration & Cleaning
+# -----------------------------------
+# We start by loading the raw UFC fight data and performing an initial exploration.
+# This includes checking for missing values, understanding the structure, and cleaning the data.
+raw_data = os.path.join("data", "UFC Fight Statistics (July 2016 - Nov 2024).csv")
+cleaned_data = os.path.join("data", "fight_totals_cleaned.csv")
+explore_data(raw_data, cleaned_data)
 
-# 2. Modelle trainieren (nach Gewichtsklasse und Geschlecht)
-models, feature_cols = train_models(df)
+# Step 2: Data Preprocessing
+# --------------------------
+# The cleaned data is further preprocessed: numeric features are scaled, categorical variables are encoded,
+# and additional features such as weight class and gender are extracted.
+preprocessed_data = os.path.join("data", "fight_totals_preprocessed.csv")
+preprocess_data(cleaned_data, preprocessed_data)
 
-# 3. Analyse der wichtigsten Features
-for key, model in models.items():
-    importance_df = analyze_feature_importance(model, df, key, feature_cols)
-    plot_feature_importance(importance_df, key)
-    print(f"\nTop-Features für {key}:")
-    print(importance_df.head(10))
+# Step 3: Model Training & Analysis
+# ---------------------------------
+# For each weight class and gender, a separate Random Forest model is trained to predict the fight winner.
+# After training, the most important features for each model are analyzed and visualized.
+train_and_analyze(preprocessed_data)
 
-# 4. Kurze Interpretation
-print("\nFazit: Die wichtigsten Features für den Kampfausgang sind meist ... (hier eigene Analyse ergänzen)")
+# Note: The predict_fight function is not included in this script.
+# It should be run separately after training the models.
