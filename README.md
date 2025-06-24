@@ -24,8 +24,7 @@ UFC_Predictor/
 ├── src/                         # Python source code (preprocessing, training, analysis, prediction)
 │   ├── data_exploration.py      # Data exploration and cleaning
 │   ├── data_preprocessing.py    # Data preprocessing (scaling, encoding)
-│   ├── model_training.py        # Model training and feature analysis
-│   ├── analysis.py              # (Optional) Feature importance analysis/plotting
+│   ├── model_training.py        # Model training and feature analysis           
 │   └── predict_fight.py         # Script for interactive fight prediction
 │
 ├── main.py                      # Central workflow script (step-by-step, fully documented)
