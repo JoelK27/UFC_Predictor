@@ -2,7 +2,8 @@
 Fight Prediction Script
 ----------------------
 This script allows you to interactively enter two fighter names, a weight class, and gender.
-It then predicts the winner using the trained model and displays the top 10 most important features.
+It then predicts the winner, the fight outcome (method), and the round using the trained models,
+and displays the top 10 most important features.
 """
 
 import pandas as pd
@@ -24,10 +25,14 @@ def get_fighter_stats(df, fighter_name, feature_cols, fighter_col_prefix):
     stats = stats.reindex([col for col in feature_cols if prefix in col], fill_value=0)
     return stats
 
-def predict_fight(fighter1, fighter2, weightclass, gender, df, models, feature_cols):
+def predict_fight(
+    fighter1, fighter2, weightclass, gender,
+    df, models, feature_cols,
+    outcome_models=None, round_models=None
+):
     """
     Build a feature vector for a new fight using the stats of both fighters,
-    predict the winner, and display the top 10 most important features.
+    predict the winner, fight outcome, and round, and display the top 10 most important features.
     """
     stats_f1 = get_fighter_stats(df, fighter1, feature_cols, "F1")
     stats_f2 = get_fighter_stats(df, fighter2, feature_cols, "F2")
@@ -40,13 +45,28 @@ def predict_fight(fighter1, fighter2, weightclass, gender, df, models, feature_c
         else:
             new_fight[col] = 0
 
+    X_new = pd.DataFrame([new_fight])
+
+    # Winner prediction
     model = models.get((weightclass, gender))
     if model is None:
-        print(f"No model found for {weightclass}, {gender}")
+        print(f"No winner model found for {weightclass}, {gender}")
         return
-
-    X_new = pd.DataFrame([new_fight])
     winner_pred = model.predict(X_new)[0]
+
+    # Outcome prediction
+    outcome_pred = None
+    if outcome_models:
+        outcome_model = outcome_models.get((weightclass, gender))
+        if outcome_model:
+            outcome_pred = outcome_model.predict(X_new)[0]
+
+    # Round prediction
+    round_pred = None
+    if round_models:
+        round_model = round_models.get((weightclass, gender))
+        if round_model:
+            round_pred = round_model.predict(X_new)[0]
 
     # Feature Importance
     importances = model.feature_importances_
@@ -55,6 +75,10 @@ def predict_fight(fighter1, fighter2, weightclass, gender, df, models, feature_c
 
     print(f"\nPrediction for {fighter1} vs {fighter2} ({weightclass}, {gender}):")
     print(f"Predicted Winner: {'Fighter1 (' + fighter1 + ')' if winner_pred == 1 else 'Fighter2 (' + fighter2 + ')'}")
+    if outcome_pred is not None:
+        print(f"Predicted Fight Outcome: {outcome_pred}")
+    if round_pred is not None:
+        print(f"Predicted Finish Round: {round_pred}")
     print("\nTop 10 Features for this model:")
     print(top10)
 
@@ -68,6 +92,16 @@ if __name__ == "__main__":
         'Finish Details or Judges Scorecard', 'Bout', 'Event Name', 'Location', 'Date',
         'Weightclass', 'Gender'
     ]]
+
+    # Optional: Load outcome and round models if available
+    outcome_models = None
+    round_models = None
+    if os.path.exists(os.path.join("models", "random_forest_outcome_models.pkl")):
+        with open(os.path.join("models", "random_forest_outcome_models.pkl"), "rb") as f:
+            outcome_models = pickle.load(f)
+    if os.path.exists(os.path.join("models", "random_forest_round_models.pkl")):
+        with open(os.path.join("models", "random_forest_round_models.pkl"), "rb") as f:
+            round_models = pickle.load(f)
 
     # Interactive input for fight prediction
     print("Welcome to the UFC Fight Predictor!")
@@ -83,5 +117,7 @@ if __name__ == "__main__":
         gender=gender,
         df=df,
         models=models,
-        feature_cols=feature_cols
+        feature_cols=feature_cols,
+        outcome_models=outcome_models,
+        round_models=round_models
     )

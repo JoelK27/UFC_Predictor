@@ -1,14 +1,18 @@
 # UFC_Predictor
 
-Semester project for AI and Data Science.  
-A classification model to determine the winner and analyze key factors for UFC fights using data accumulated between July 2016 and November 2024.
+Semester project for AI and Data Science  
+A machine learning pipeline to predict the winner, fight outcome (finish or decision), and number of rounds for UFC fights, using data from July 2016 to November 2024.
 
 ---
 
 ## Project Overview
 
-This project builds a machine learning model to predict the outcome of UFC fights and analyzes the most important influencing factors.  
-The entire workflow is organized as Python scripts and is fully reproducible.
+This project develops several machine learning models to predict key aspects of UFC fights:
+- **Winner prediction:** Which fighter will win.
+- **Outcome prediction:** Whether the fight ends by finish or decision.
+- **Rounds prediction:** The expected number of rounds the fight will last.
+
+All scripts are written in Python and the workflow is fully reproducible.
 
 ---
 
@@ -24,8 +28,8 @@ UFC_Predictor/
 ├── src/                         # Python source code (preprocessing, training, analysis, prediction)
 │   ├── data_exploration.py      # Data exploration and cleaning
 │   ├── data_preprocessing.py    # Data preprocessing (scaling, encoding)
-│   ├── model_training.py        # Model training and feature analysis           
-│   └── predict_fight.py         # Script for interactive fight prediction
+│   ├── model_training.py        # Model training and feature analysis
+│   └── predict_fight.py         # Interactive script for fight prediction
 │
 ├── main.py                      # Central workflow script (step-by-step, fully documented)
 ├── environment.yml              # Anaconda environment for reproducibility
@@ -34,7 +38,7 @@ UFC_Predictor/
 
 ---
 
-## Reproducibility & Setup
+## Setup & Reproducibility
 
 1. **Create Anaconda Environment**  
    Make sure [Anaconda](https://www.anaconda.com/products/individual) is installed.  
@@ -45,18 +49,18 @@ UFC_Predictor/
    ```
 
 2. **Data**  
-   The raw data file (`UFC Fight Statistics (July 2016 - Nov 2024).csv`) should be placed in the `data/` folder.  
-   If not present, please download it from the official source or your course platform and place it there.
+   Place the raw data file (`UFC Fight Statistics (July 2016 - Nov 2024).csv`) in the `data/` folder.  
+   If not present, download it from the official source or your course platform.
 
 3. **Run the Project**  
-   Start the entire workflow with:
+   Start the full workflow with:
    ```bash
    python main.py
    ```
 
 ---
 
-## Workflow (main.py)
+## Workflow
 
 The workflow is fully linear and documented in `main.py`:
 
@@ -65,20 +69,20 @@ The workflow is fully linear and documented in `main.py`:
   Saves a cleaned version for further processing.
 
 - **Preprocessing:**  
-  Scales numeric features, encodes the target variable, and extracts additional features such as weight class and gender.  
+  Scales numeric features, encodes target variables (winner, outcome, rounds), and extracts additional features such as weight class and gender.  
   Saves the preprocessed data for modeling.
 
 - **Model Training & Analysis:**  
-  Trains a separate Random Forest model for each weight class and gender.  
+  Trains separate Random Forest models for winner, outcome, and rounds for each weight class and gender.  
   Evaluates model performance, analyzes feature importance, and saves the trained models for later use.  
   Visualizes the top 10 most important features for each model.
 
 - **Interpretation:**  
-  Short conclusions and findings are printed in the script output after each step.
+  Key findings and conclusions are printed after each step in the script output.
 
 ---
 
-## Predicting a Fight
+## Fight Prediction
 
 After running `main.py` and training the models, you can predict the outcome of a specific fight using the interactive script:
 
@@ -92,7 +96,11 @@ You will be prompted to enter:
 - Weight class (e.g. "Flyweight")
 - Gender ("Men" or "Women")
 
-The script will output the predicted winner and the 10 most important features for the selected model.
+The script will output:
+- Predicted winner
+- Predicted fight outcome (finish or decision)
+- Predicted number of rounds
+- The 10 most important features for the selected model
 
 ---
 
@@ -100,7 +108,7 @@ The script will output the predicted winner and the 10 most important features f
 
 - **Python scripts only:**  
   The entire project runs as `.py` files, no notebooks.
-- **All steps are documented** and commented so the workflow is easy to follow and reproducible.
+- **All steps are documented** and commented for easy reproducibility.
 - **All analyses and findings** are included directly in the code and console output.
 - **Models are saved automatically** in the `models/` folder after training.
 
@@ -108,4 +116,4 @@ The script will output the predicted winner and the 10 most important features f
 
 ## Contact
 
-For questions or feedback, please contact the Github! (JoelK27/UFC_Predictor)
+For questions or feedback, please contact via Github! (JoelK27/UFC_Predictor)
