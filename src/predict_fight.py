@@ -90,7 +90,7 @@ if __name__ == "__main__":
     feature_cols = [col for col in df.columns if col not in [
         'Fighter1', 'Fighter2', 'Winner?', 'Winner?.1', 'Fight Method', 'Time', 'Time Format', 'Referee',
         'Finish Details or Judges Scorecard', 'Bout', 'Event Name', 'Location', 'Date',
-        'Weightclass', 'Gender'
+        'Weightclass', 'Gender', 'Rounds'
     ]]
 
     # Optional: Load outcome and round models if available

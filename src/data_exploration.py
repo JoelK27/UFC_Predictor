@@ -38,6 +38,7 @@ def explore_data(input_path, output_path):
         plt.savefig('data/target_distribution.png')
         plt.close()
 
+
     # Remove columns that are completely empty
     empty_cols = [col for col in df.columns if df[col].isnull().all()]
     df = df.drop(columns=empty_cols)
