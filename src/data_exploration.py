@@ -55,13 +55,6 @@ def explore_data(input_path, output_path):
     # Remove duplicate rows
     df = df.drop_duplicates()
 
-    # Example: Detect outliers in 'Sig. Str.' column if it exists
-    if 'Sig. Str.' in df.columns:
-        sns.boxplot(x=df['Sig. Str.'])
-        plt.title('Boxplot Significant Strikes')
-        plt.savefig('data/sig_str_boxplot.png')
-        plt.close()
-
     # Save the cleaned data for the next step
     df.to_csv(output_path, index=False)
     print(f"\nCleaned data saved as {output_path}")
