@@ -1,3 +1,11 @@
+"""Add commentMore actions
+Model Training & Feature Analysis
+---------------------------------
+This module trains a Random Forest model for each weight class and gender combination.
+It evaluates model performance, analyzes feature importance, and saves the trained models for later use.
+"""
+
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
