@@ -25,7 +25,7 @@ UFC_Predictor/
 │
 ├── models/                      # Trained model files (created automatically)
 │
-├── src/                         # Python source code (preprocessing, training, analysis, prediction)
+├── src/                         # Python source code (preprocessing, training, analysis, prediction and Stats Scraper from Kaggle)
 │   ├── data_exploration.py      # Data exploration and cleaning
 │   ├── data_preprocessing.py    # Data preprocessing (scaling, encoding)
 │   ├── model_training.py        # Model training and feature analysis
@@ -50,7 +50,7 @@ UFC_Predictor/
 
 2. **Data**  
    Place the raw data file (`UFC Fight Statistics (July 2016 - Nov 2024).csv`) in the `data/` folder.  
-   If not present, download it from the official source or your course platform.
+   If not present, download it from the official source (https://www.kaggle.com/datasets/alexmagnus24/ufc-fight-statistics-july-2016-nov-2024).
 
 3. **Run the Project**  
    Start the full workflow with:
@@ -111,6 +111,8 @@ The script will output:
 - **All steps are documented** and commented for easy reproducibility.
 - **All analyses and findings** are included directly in the code and console output.
 - **Models are saved automatically** in the `models/` folder after training.
+- **Unused Kaggle Data/Models** are still included in the project even though they can theoretically be deleted:
+  UFC_Stats_Scraper.ipynb, UFC Fight Statistics Disparities (July 2016 - Nov 2024).csv, UFC_Fights_3Rd_Decisions_Disparities.csv and UFC_Fights_5Rd_Decisions_Disparities.csv
 
 ---
 

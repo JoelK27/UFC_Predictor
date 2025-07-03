@@ -31,5 +31,10 @@ preprocess_data(cleaned_data, preprocessed_data)
 # After training, the most important features for each model are analyzed and visualized.
 train_and_analyze(preprocessed_data)
 
-# Note: The predict_fight function is not included in this script.
+# Notes: 
+# The models are saved in the 'models' directory for later use.
+# The predict_fight function is not included in this script.
 # It should be run separately after training the models.
+# The predict_fight function can be found in src/predict_fight.py and is used to make predictions for new fights.
+# For more details on how to use it, refer to the documentation in that file.
+# More info on the project structure and unused files can be found in the README.md file.

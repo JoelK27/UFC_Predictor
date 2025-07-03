@@ -93,7 +93,7 @@ if __name__ == "__main__":
         'Weightclass', 'Gender', 'Rounds'
     ]]
 
-    # Optional: Load outcome and round models if available
+    # Load outcome and round models
     outcome_models = None
     round_models = None
     if os.path.exists(os.path.join("models", "random_forest_outcome_models.pkl")):
